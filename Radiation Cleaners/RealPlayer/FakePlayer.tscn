@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://RealPlayer/FakePlayer.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.5
+mid_height = 2.0
+
+[sub_resource type="PrismMesh" id=2]
+size = Vector3( 0.8, 0.8, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.0588235, 0.117647, 1, 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="FakePlayer" type="KinematicBody"]
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 11.4955, -0.0482898 )
+current = true
+
+[node name="Mesh" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1.49319, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Arrow" type="MeshInstance" parent="Mesh"]
+transform = Transform( -1, 3.25841e-07, 0, -3.25841e-07, -1, 0, 0, 0, 1, 0, -0.0802247, -1.74772 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.21
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 821.946
+margin_top = 84.4229
+margin_right = 877.946
+margin_bottom = 144.423
+custom_fonts/font = SubResource( 4 )
+text = "60"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer"]
+margin_left = 586.164
+margin_top = 80.8593
+margin_right = 820.164
+margin_bottom = 140.859
+custom_fonts/font = SubResource( 4 )
+text = "Time Left :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Points" type="Label" parent="CanvasLayer"]
+margin_left = 639.618
+margin_top = 140.859
+margin_right = 873.618
+margin_bottom = 200.859
+custom_fonts/font = SubResource( 4 )
+text = "Points :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Point" type="Label" parent="CanvasLayer"]
+margin_left = 820.164
+margin_top = 140.859
+margin_right = 1054.16
+margin_bottom = 263.859
+custom_fonts/font = SubResource( 4 )
+text = "0
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RayCast" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23194, -0.0382268 )
+enabled = true
+cast_to = Vector3( 0, -3, 0 )
