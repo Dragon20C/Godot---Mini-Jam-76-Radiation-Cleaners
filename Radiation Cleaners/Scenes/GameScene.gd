@@ -11,4 +11,10 @@ func _on_Quit_pressed():
 
 
 func _on_HTP_pressed():
-	pass # Replace with function body.
+	$Main/Main.visible = false
+	$Help.visible = true
+
+
+func _on_Button_pressed():
+	$Main/Main.visible = true
+	$Help.visible = false

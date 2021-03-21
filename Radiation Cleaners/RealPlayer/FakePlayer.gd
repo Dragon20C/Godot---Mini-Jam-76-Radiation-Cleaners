@@ -7,15 +7,18 @@ var next_pos = Vector3()
 var destination = Vector3()
 var can_move = false
 var collision_array = []
-var time = 5
+var time = 60
 var points = 0
+var menu = false
 onready var collision_node = Global.collision
 onready var button_duration = $Timer
 onready var health_label = $CanvasLayer/Label
 onready var points_label = $CanvasLayer/Point
+onready var power_up = get_node("../PowerUp")
 onready var ray = $RayCast
 
 func _ready():
+	print(power_up)
 	Global.player = self
 	current_dir = "up"
 	next_pos = Vector3.FORWARD
@@ -41,18 +44,18 @@ func game_over():
 func _physics_process(delta):
 	translation = translation.move_toward(destination,speed * delta)
 	$Mesh.rotation.y = lerp_angle($Mesh.rotation.y, atan2(-next_pos.x, -next_pos.z), delta * angle_speed)
-	
-	if Input.is_action_pressed("Interact"):
-		if ray.is_colliding():
-			var cube = ray.get_collider()
-			if cube.is_in_group("Floor"):
-				if cube.material.albedo_color[1] >= 0.3:
-					points += 1
-					cube.TIME.start()
-					cube.speed = 0
-					cube.toxic = 0
-					cube.radable = false
-					cube.material.albedo_color[1] = 0
+	if Input.is_action_just_pressed("ui_cancel"):
+		menu = !menu
+	if ray.is_colliding():
+		var cube = ray.get_collider()
+		if cube.is_in_group("Floor"):
+			if cube.material.albedo_color[1] >= 0.3:
+				points += 1
+				cube.TIME.start()
+				cube.speed = 0
+				cube.toxic = 0
+				cube.radable = false
+				cube.material.albedo_color[1] = 0
 
 	if !translation + Vector3.FORWARD in collision_array:
 		if Input.is_action_pressed("w") and button_duration.is_stopped():
@@ -83,4 +86,15 @@ func _physics_process(delta):
 		destination = translation + (next_pos)
 		destination = translation + (next_pos)
 		can_move = false
+	if menu:
+		$Excape.visible = true
+	else:
+		$Excape.visible = false
+func _on_Area_area_entered(area):
+	power_up.queue_free()
+	speed = 9
+	
 
+
+func _on_mainmenu_pressed():
+	get_tree().change_scene("res://Scenes/GameScene.tscn")

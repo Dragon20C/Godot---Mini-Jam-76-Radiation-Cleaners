@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://RealPlayer/FakePlayer.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Roboto/Roboto-Regular.ttf" type="DynamicFontData" id=3]
@@ -16,6 +16,12 @@ albedo_color = Color( 0.0588235, 0.117647, 1, 1 )
 [sub_resource type="DynamicFont" id=4]
 size = 50
 use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 1, 2.04159, 1 )
+
+[sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 3 )
 
 [node name="FakePlayer" type="KinematicBody"]
@@ -90,3 +96,29 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.23194, -0.0382268 )
 enabled = true
 cast_to = Vector3( 0, -3, 0 )
+
+[node name="Area" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="Area"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86842, 0 )
+shape = SubResource( 5 )
+
+[node name="Excape" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.58734
+margin_top = 1.5874
+margin_right = 1.5874
+margin_bottom = 1.5874
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mainmenu" type="Button" parent="Excape"]
+margin_left = 693.542
+margin_top = 381.0
+margin_right = 828.542
+margin_bottom = 429.0
+custom_fonts/font = SubResource( 6 )
+text = "Back to main Menu"
+[connection signal="pressed" from="Excape/mainmenu" to="." method="_on_mainmenu_pressed"]
